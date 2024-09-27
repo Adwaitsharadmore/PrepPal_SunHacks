@@ -12,6 +12,14 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+.customcolor{
+  color: #a7ece3;
+}
+
+.custom_background_color{
+  color: #f6f1eb;
+}
+
   .green-glow {
     text-shadow: 0 0 5px #00ff00b1, 0 0 10px #00c300, 0 0 15px #00ff00be, 0 0 20px #00ff00;
     color: #00ff00; /* Ensures the text itself is green */

@@ -11,6 +11,8 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'custom-bg': '#f6f1eb',
+        'custom-hover':'#a7ece3',
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
