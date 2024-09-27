@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import React from "react";
 
@@ -9,9 +10,11 @@ const ResponsePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-custom_background_color">
+    <div className="min-h-screen" style={{ backgroundColor: "#f6f1eb" }}>git 
       <header className="p-4 gap-[500px] flex items-center rounded-full">
-        <div className="font-bold text-3xl text-black font-inter pl-3">PrepPal</div>
+      <Link href="/">
+          <div className="font-bold text-3xl text-black font-inter pl-3">PrepPal</div>
+          </Link>
       </header>
 
       <div className="flex-1 flex flex-col justify-center items-center">

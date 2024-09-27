@@ -1,11 +1,14 @@
   import Image from "next/image";
+  import Link from "next/link";
   import "./globals.css";
 
   export default function Home() {
     return (
       <div className="min-h-screen bg-color bg-custom-bg">
         <header className="p-4 gap-[500px] flex items-center rounded-full">
-          <div className="font-bold text-3xl text-black font-inter pl-3">PrepPal</div>
+          <Link href='/'>
+          <div className="font-bold text-3xl text-black font-inter pl-3">PrepPal</div></Link>
+         
           <div className="flex gap-5 pl-10 pr-10 items-center bg-black p-2.5 rounded-full text-white shadow-lg custom-shadow">
             <div>Login</div>
             <div>Contact</div>

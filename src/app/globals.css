@@ -28,3 +28,11 @@ body {
   .custom-shadow {
   box-shadow: 0 4px 15px rgba(167, 236, 227, 0.6); /* Shadow with color #a7ece3 */
 }
+
+  @layer base {
+  :root {
+    --radius: 0.5rem;
+  
+  }
+  
+}
