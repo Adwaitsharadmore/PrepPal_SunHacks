@@ -1,23 +1,29 @@
+import express from 'express';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleAIFileManager } from "@google/generative-ai/server";
 import dotenv from 'dotenv';
-dotenv.config();
-
+import multer from 'multer';
 import fs from 'fs';
-console.log("Initializing Google Generative AI...");
+import cors from 'cors';
 
+dotenv.config();
+const app = express();
+app.use(cors());
+
+
+const port = process.env.PORT || 3001;
+
+// Initialize Google Generative AI and File Manager
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-console.log("Google Generative AI initialized");
-
 const fileManager = new GoogleAIFileManager(process.env.API_KEY);
-console.log("File Manager initialized");
-
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
 });
-console.log("Model selected: gemini-1.5-flash");
 
-// Function to upload the file with retries
+// Set up multer for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+// Function to upload a file with retries
 async function uploadFileWithRetry(filePath, options, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -31,27 +37,52 @@ async function uploadFileWithRetry(filePath, options, retries = 3) {
   }
 }
 
-// Main execution
-try {
-  const uploadResponse = await uploadFileWithRetry("media/gemini.pdf", {
-    mimeType: "application/pdf",
-    displayName: "Gemini 1.5 PDF",
-  });
-  console.log(`Uploaded file: ${uploadResponse.file.displayName} as ${uploadResponse.file.uri}`);
+// Route for file upload and content generation
+app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
+  const { file } = req;
+  const { textPrompt } = req.body;
 
-  // Generate content using text and the URI reference for the uploaded file.
-  const result = await model.generateContent([
-    {
-      fileData: { 
-        mimeType: uploadResponse.file.mimeType,
-        fileUri: uploadResponse.file.uri,
+  if (!file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
+  try {
+    const filePath = file.path;
+
+    // Upload the file with retries
+    const uploadResponse = await uploadFileWithRetry(filePath, {
+      mimeType: "application/pdf",
+      displayName: file.originalname,
+    });
+
+    console.log(`Uploaded file: ${uploadResponse.file.displayName} as ${uploadResponse.file.uri}`);
+
+    // Generate content using the uploaded file and the text prompt
+    const result = await model.generateContent([
+      {
+        fileData: {
+          mimeType: uploadResponse.file.mimeType,
+          fileUri: uploadResponse.file.uri,
+        },
       },
-    },
-    { text: "Can you summarize this document as a bulleted list?" },
-  ]);
+      { text: textPrompt || "Can you summarize this document as a bulleted list?" },
+    ]);
 
-  // Output the generated text to the console
-  console.log("Generated text:", result.response.text());
-} catch (error) {
-  console.error("Error during file upload or content generation:", error);
-}
+    // Return the generated text as response
+    res.json({
+      message: "Content generated successfully",
+      generatedText: result.response.text(), // Output the generated text
+    });
+
+    // Delete the uploaded file from local storage
+    fs.unlinkSync(filePath);
+  } catch (error) {
+    console.error("Error during file upload or content generation:", error);
+    res.status(500).json({ error: "File upload or content generation failed" });
+  }
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});

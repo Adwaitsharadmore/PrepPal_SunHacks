@@ -1,38 +1,50 @@
-  import Image from "next/image";
-  import Link from "next/link";
-  import "./globals.css";
+"use client";
 
-  export default function Home() {
-    return (
-      <div className="min-h-screen bg-color bg-custom-bg">
-        <header className="p-4 gap-[500px] flex items-center rounded-full">
-          <Link href='/'>
-          <div className="font-bold text-3xl text-black font-inter pl-3">PrepPal</div></Link>
-         
-          <div className="flex gap-5 pl-10 pr-10 items-center bg-black p-2.5 rounded-full text-white shadow-lg custom-shadow">
-            <div>Login</div>
-            <div>Contact</div>
-            <div>Home</div>
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import "./globals.css";
+import cors from "cors";
+import express from "express";
+
+const Home = () => {
+  return (
+    <div className="min-h-screen bg-color bg-custom-bg">
+      <header className="p-4 gap-[500px] flex items-center rounded-full">
+        <Link href="/">
+          <div className="font-bold text-3xl text-black font-inter pl-3">
+            PrepPal
           </div>
-        </header>
-        <div className="flex-1 flex flex-col justify-center items-center">
-          <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
-            <div className="font-extrabold text-6xl text-black-400 font-inter">
-              For last minute
-              <span className="font-bold text-6xl" style={{ color: "#a7ece3" }}>
-                {" "}
-                studies
-              </span>
-            </div>
-            <div className="font text-2xl pb-5 pt-2">
-              Convert notes to cheatsheets
-            </div>
+        </Link>
+
+        <div className="flex gap-5 pl-10 pr-10 items-center bg-black p-2.5 rounded-full text-white shadow-lg custom-shadow">
+          <div>Login</div>
+          <div>Contact</div>
+          <div>Home</div>
+        </div>
+      </header>
+      <div className="flex-1 flex flex-col justify-center items-center">
+        <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
+          <div className="font-extrabold text-6xl text-black-400 font-inter">
+            For last minute
+            <span className="font-bold text-6xl" style={{ color: "#a7ece3" }}>
+              {" "}
+              studies
+            </span>
+          </div>
+          <div className="font text-2xl pb-5 pt-2">
+            Convert notes to cheatsheets
+          </div>
+          <Link href="/responsePage">
             <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
               <input type="file" className="hidden" />
-              <span className="font-bold">Upload Files</span>
+              <span className="font-bold">Let's make it</span>
             </label>
-          </div>
+          </Link>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+};
+
+export default Home;
