@@ -65,7 +65,7 @@ app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
           fileUri: uploadResponse.file.uri,
         },
       },
-      { text: textPrompt || "Can you summarize this document as a bulleted list?" },
+      { text: textPrompt || "Can you create cheatsheet of this document with the main title in curly brackets and subtopics in brackets and their bullet points and keep the text normal" },
     ]);
 
     // Return the generated text as response
