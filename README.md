@@ -1,2 +1,2 @@
-# PrepPal_SunHacks
+# Prepal
 Web Application for last minute studies
