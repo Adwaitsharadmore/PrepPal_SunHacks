@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link"; // Import Link to handle routing back to the homepage
+import Image from "next/image";
 
 const QuizPage = () => {
   const [quizContent, setQuizContent] = useState([]);
@@ -79,9 +80,17 @@ const QuizPage = () => {
     <div className="min-h-screen bg-black bg-gradient-preppal text-white flex flex-col items-center justify-center">
       {/* PrepPal Header in the top left */}
       <header className="absolute top-0 left-0 p-4">
-        <Link href="/">
-          <div className="font-semibold text-3xl text-white pl-3">PrepPal</div>
-        </Link>
+      <div>
+          <Link href="/">
+            <Image
+              src="/images/logo.JPG" // Make sure the path is correct
+              alt="PrepPal Logo"
+              width={100}
+              height={100}
+              className="object-cover rounded-full"
+            />
+          </Link>
+        </div>
       </header>
 
       <h1 className="text-4xl font-semibold mb-6">Here's your quiz!</h1>

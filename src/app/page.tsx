@@ -36,7 +36,7 @@ export default function Home() {
       text: "prepPal saved my life before finals! turning my messy notes into cheat sheets in seconds? LITERAL. GENIUS.",
       author: "Aariya Gage",
       position: "Junior @ ASU",
-      image: "/images/lsb_release.png", // Your image path here
+      image: "/images/aariya.jpg", // Your image path here
       rating: 5,
     },
     {
@@ -86,45 +86,56 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-custom-bg bg-gradient-preppal" style={{ backgroundColor: "#000" }}>
+      {/*
+            <div className="absolute top-20 left-[15px] w-[400px] h-[400px] z-50">
+        <Image src="/images/decor1.png" alt="Decorative Image" width={350} height={350} className="object-cover" />
+      </div>
+      <div className="absolute top-[600px] left-[90px] w-[350px] h-[350px] z-50">
+        <Image src="/images/decor2.png" alt="Decorative Image" width={350} height={350} className="object-cover" />
+      </div>
+      <div className="absolute top-[100px] right-[150px] w-[350px] h-350px] z-50">
+        <Image src="/images/decor3.png" alt="Decorative Image" width={350} height={350} className="object-cover" />
+      </div>
+      
+      */}
 
 
       {/* Main Section */}
-{/* Main Section */}
-<div>
+      <div>
+        <div className="flex-1 flex bg-gradient-preppal flex-col justify-center items-center section relative z-20">
+          <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
+            {/* Image above "PrepPal" */}
+            <div className="mb-1">
+              <Image
+                src="/images/file.png" // Replace with the actual path to file.png
+                alt="Decorative Image"
+                width={275}
+                height={275}
+                className="object-cover"
+              />
+            </div>
 
-<div className="flex-1 flex bg-gradient-preppal flex-col justify-center items-center section relative z-20">
-  <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
-    {/* Image above "PrepPal" */}
-    <div className="mb-1"> {/* Adjust margin bottom here */}
-      <Image
-        src="/images/file.png" // Replace with the actual path to file.png
-        alt="Decorative Image"
-        width={275} // Adjust size as necessary
-        height={275} // Adjust size as necessary
-        className="object-cover"
-      />
-    </div>
 
-    <div className="font-semibold text-4xl text-white font-inter mb-1 text-center">
-      for last-minute
-      <span className="font-semibold text-4xl" style={{ color: "rgba(235, 255, 92, 1)" }}>
-        {" "}studies
-      </span>
-    </div>
+            <div className="font-semibold text-6xl text-white font-inter mb-2 text-center">
+              for last-minute
+              <span className="font-semibold text-6xl" style={{ color: "rgba(235, 255, 92, 1)" }}>
+                {" "}studies
+              </span>
+            </div>
 
-    <div className="font text-xl pb-5 pt-2 text-center">
-      convert notes to cheatsheets
-    </div>
+            <div className="font text-xl pb-5 pt-2 text-center">
+              convert notes to cheatsheets
+            </div>
 
-    <Link href='/responsePage'>
-      <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover hover:text-black transition-colors">
-        <input type="file" className="hidden" />
-        <span className="font-semibold">let's get to studying</span>
-      </label>
-    </Link>
-  </div>
-</div>
-</div>
+            <Link href='/responsePage'>
+              <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover hover:text-black transition-colors">
+                <input type="file" className="hidden" />
+                <span className="font-semibold">let's get to studying</span>
+              </label>
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {/* Mission Section */}
       <section className="min-h-screen bg-black text-white flex justify-center items-center rounded-t-3xl section relative z-20">
@@ -187,9 +198,9 @@ export default function Home() {
                     <Image
                       src={testimonial.image || '/images/default-avatar.png'} // Default image if no image is provided
                       alt={testimonial.author}
-                      width={200} // Set width
-                      height={200} // Set height to keep it square
-                      className="rounded-lg object-cover" // Make image square with rounded corners
+                      width={200}
+                      height={200}
+                      className="rounded-lg object-cover"
                     />
                   </div>
 
