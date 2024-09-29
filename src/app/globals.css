@@ -2,47 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 body {
-  @apply text-black ; /* TailwindCSS classes */
-  
+  @apply text-white bg-black text-xl; /* Adjusted font size to be bigger but not overly large */
 }
+
 body {
   font-family: 'Inter', sans-serif;
 }
 
-.customcolor{
+.customcolor {
   color: #a7ece3;
 }
 
-.custom_background_color{
+.custom_background_color {
   color: #f6f1eb;
 }
 
-  .green-glow {
-    text-shadow: 0 0 5px #00ff00b1, 0 0 10px #00c300, 0 0 15px #00ff00be, 0 0 20px #00ff00;
-    color: #00ff00; /* Ensures the text itself is green */
-  }
+.green-glow {
+  text-shadow: 0 0 5px #00ff00b1, 0 0 10px #00c300, 0 0 15px #00ff00be, 0 0 20px #00ff00;
+  color: #00ff00; /* Ensures the text itself is green */
+}
 
-  .custom-shadow {
+.custom-shadow {
   box-shadow: 0 4px 15px rgba(167, 236, 227, 0.6); /* Shadow with color #a7ece3 */
 }
 
-  @layer base {
+@layer base {
   :root {
     --radius: 0.5rem;
-  
   }
-  
 }
+
 .section {
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
-/* Class to apply when the section is visible */
 .section-visible {
   opacity: 1;
   transform: translateY(0);
@@ -57,4 +55,18 @@ body {
 .fade-in-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.circle-gradient-bg {
+  background: radial-gradient(circle, rgba(167, 236, 227, 0.2) 0%, rgba(0, 0, 0, 0.9) 70%);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+/* Add this to globals.css */
+.bg-gradient-preppal {
+  background: radial-gradient(circle, rgba(167, 236, 227, 0.2) 0%, rgba(0, 0, 0, 1) 100%);
 }

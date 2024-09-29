@@ -22,41 +22,41 @@ export default function Home() {
     {
       title: "ask and ace",
       description: "No more sifting through pages—get answers to specific questions in an instant! Easily find answers to specific questions from your notes. prepPal lets you pinpoint key information, helping you understand concepts better and enhancing your study sessions.",
-      image: "/images/quiz-yourself.jpg",
+      image: "/images/feature2.png",
     },
     {
       title: "quiz yourself",
       description: "Challenge yourself and reinforce your learning. With prepPal, create quizzes from your notes and test your understanding. Get instant feedback to help you improve and prepare effectively for exams.",
-      image: "/images/ask-questions.jpg",
+      image: "/images/feature3.png",
     },
   ];
 
   const testimonials = [
     {
-      text: "I have completed multiple, post-graduate certificates in my life and always felt relief at the end. This time, I felt a sense of loss when I had no new classes to attend.",
-      author: "Ted Burgess",
-      position: "Director of Psychological Health",
+      text: "prepPal saved my life before finals! turning my messy notes into cheat sheets in seconds? LITERAL. GENIUS.",
+      author: "Aariya Gage",
+      position: "Junior @ ASU",
       image: "/images/ted.jpg",
       rating: 5,
     },
     {
-      text: "The Augment Me program helped me realize my passion for education and I now feel confident in my teaching abilities.",
-      author: "Catherine Boldeau",
-      position: "Professional Speaker",
+      text: "can’t believe how I survived without prepPal. it's like having a cheat code for studying!",
+      author: "Riya Ubhe",
+      position: "Sophomore @ ASU",
       image: "/images/catherine.jpg",
       rating: 4,
     },
     {
-      text: "prepPal helped me organize my notes and study effectively. I finally felt ready for my exams without the usual stress.",
-      author: "Jessica Turner",
-      position: "College Student",
+      text: "prepPal is the ultimate procrastinator’s dream. i barely studied, and still felt prepared. 10/10!",
+      author: "Soohum Kaushik",
+      position: "Junior @ ASU",
       image: "/images/jessica.jpg",
       rating: 5,
     },
     {
-      text: "I can't believe how easy prepPal made it for me to create a cheat sheet from my notes. It saved me so much time during finals!",
-      author: "Alex Smith",
-      position: "Graduate Student",
+      text: "this website makes cramming SO much easier. prepPal turned my chaos into a cheat sheet masterpiece!",
+      author: "Adwait More",
+      position: "Sophomore @ ASU",
       image: "/images/alex.jpg",
       rating: 4,
     },
@@ -85,7 +85,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-custom-bg" style={{ backgroundColor: "#f6f1eb" }}>
+    <div className="min-h-screen bg-custom-bg bg-gradient-preppal" style={{ backgroundColor: "#000" }}>
       {/* Upper Header Section */}
       <header className="p-4 flex justify-center">
         <div className="flex gap-5 pl-10 pr-10 items-center bg-black p-2.5 rounded-full text-white shadow-lg custom-shadow">
@@ -102,15 +102,16 @@ export default function Home() {
       </header>
 
       {/* Main Section */}
-      <div className="flex-1 flex flex-col justify-center items-center">
-        <div className="min-h-screen flex-1 flex justify-center items-center flex-col section">
-          <div className="font-bold text-6xl text-black font-inter mb-4 text-center">
+      
+      <div className="flex-1 flex flex-col justify-center items-center section">
+        <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
+          <div className="font-semibold text-6xl text-white font-inter mb-4 text-center">
             prepPal
           </div>
 
-          <div className="font-extrabold text-4xl text-black-400 font-inter mb-2 text-center">
+          <div className="font-semibold text-4xl text-white font-inter mb-2 text-center">
             for last-minute
-            <span className="font-bold text-4xl" style={{ color: "#a7ece3" }}>
+            <span className="font-semibold text-4xl" style={{ color: "rgba(167, 236, 227, 0.6)" }}>
               {" "}studies
             </span>
           </div>
@@ -122,7 +123,7 @@ export default function Home() {
           <Link href='/responsePage'>
             <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
               <input type="file" className="hidden" />
-              <span className="font-bold">let's get to studying</span>
+              <span className="font-semibold">let's get to studying</span>
             </label>
           </Link>
         </div>
@@ -131,7 +132,7 @@ export default function Home() {
       {/* Mission Section */}
       <section className="min-h-screen bg-black text-white flex justify-center items-center rounded-t-3xl section">
         <div className="w-full max-w-6xl p-16 mx-6 my-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold font-inter leading-snug text-center">
+          <h1 className="text-5xl md:text-6xl font-semibold leading-snug text-center">
             prepPal is for when you <br /> totally didn't forget to study.
           </h1>
 
@@ -160,7 +161,7 @@ export default function Home() {
               </div>
 
               <div className="md:w-1/2 p-4">
-                <h3 className="text-4xl font-bold mb-4 text-white">{feature.title}</h3>
+                <h3 className="text-4xl font-semibold mb-4 text-white">{feature.title}</h3>
                 <p className="text-lg text-gray-300">{feature.description}</p>
               </div>
             </div>
@@ -169,11 +170,10 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gray-100 text-black section">
+      <section className="py-20 bg-black text-white section">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-8">What Our Users Say</h2>
+          <h2 className="text-3xl font-semibold text-center mb-8">What Our Users Say</h2>
 
-          {/* Swiper slider */}
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={30}
@@ -184,8 +184,7 @@ export default function Home() {
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index}>
-                <div className="p-6 bg-white rounded-lg shadow-lg max-w-sm mx-auto">
-                  {/* Profile picture */}
+                <div className="p-6 bg-black rounded-lg shadow-lg max-w-sm mx-auto">
                   <div className="flex justify-center mb-4">
                     <Image
                       src={testimonial.image}
@@ -196,20 +195,18 @@ export default function Home() {
                     />
                   </div>
 
-                  {/* Star reviews */}
                   <div className="flex justify-center mb-4">
                     {Array.from({ length: testimonial.rating }, (_, i) => (
                       <span key={i} className="text-yellow-500 text-lg">&#9733;</span>
                     ))}
                   </div>
 
-                  {/* Testimonial text */}
                   <p className="text-lg italic text-center mb-4">
                     "{testimonial.text}"
                   </p>
 
-                  <p className="mt-2 font-bold text-center">{testimonial.author}</p>
-                  <p className="text-sm text-gray-600 text-center">{testimonial.position}</p>
+                  <p className="mt-2 font-semibold text-center">{testimonial.author}</p>
+                  <p className="text-sm text-gray-300 text-center">{testimonial.position}</p>
                 </div>
               </SwiperSlide>
             ))}

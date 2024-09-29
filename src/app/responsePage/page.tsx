@@ -84,66 +84,63 @@ const ResponsePage = () => {
     }
   };
   
-const renderCheatsheetAsList = () => {
-  if (!cheatsheetContent) return null;
+  const renderCheatsheetAsList = () => {
+    if (!cheatsheetContent) return null;
 
-  // Split the cheatsheet content by double newlines to separate sections
-  const sections = cheatsheetContent.split("\n\n").filter((section) => section.trim() !== "");
+    // Split the cheatsheet content by double newlines to separate sections
+    const sections = cheatsheetContent.split("\n\n").filter((section) => section.trim() !== "");
+
+    return (
+      <div>
+        {sections.map((section, index) => {
+          // Split section by newlines to separate the lines
+          const lines = section.split("\n").filter((line) => line.trim() !== "");
+          
+          return (
+            <div key={index} className="mb-6">
+              {lines.map((line, lineIndex) => {
+                // Remove hyphens at the start of lines
+                const cleanedLine = line.replace(/^\-\s*/, "").trim();
+
+                if (cleanedLine.startsWith("{") && cleanedLine.endsWith("}")) {
+                  // Main title with curly brackets
+                  const mainTitle = cleanedLine.replace(/^\{(.*?)\}$/, "$1");
+                  return (
+                    <h1 key={lineIndex} className="font-semibold text-3xl text-white mb-4">
+                      {mainTitle}
+                    </h1>
+                  );
+                } else if (cleanedLine.startsWith("[") && cleanedLine.endsWith("]")) {
+                  // Subtopic with square brackets
+                  const subtopic = cleanedLine.replace(/^\[(.*?)\]$/, "$1");
+                  return (
+                    <h2 key={lineIndex} className="font-semibold text-xl text-white mb-2">
+                      {subtopic}
+                    </h2>
+                  );
+                } else {
+                  // Regular bullet points without hyphens
+                  return (
+                    <ul key={lineIndex} className="list-disc pl-5">
+                      <li className="text-lg text-white mb-2">
+                        {cleanedLine} {/* Display points as clean bullet points */}
+                      </li>
+                    </ul>
+                  );
+                }
+              })}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
-    <div>
-      {sections.map((section, index) => {
-        // Split section by newlines to separate the lines
-        const lines = section.split("\n").filter((line) => line.trim() !== "");
-        
-        return (
-          <div key={index} className="mb-6">
-            {lines.map((line, lineIndex) => {
-              // Remove hyphens at the start of lines
-              const cleanedLine = line.replace(/^\-\s*/, "").trim();
-
-              if (cleanedLine.startsWith("{") && cleanedLine.endsWith("}")) {
-                // Main title with curly brackets
-                const mainTitle = cleanedLine.replace(/^\{(.*?)\}$/, "$1");
-                return (
-                  <h1 key={lineIndex} className="font-extrabold text-3xl text-black-600 mb-4">
-                    {mainTitle}
-                  </h1>
-                );
-              } else if (cleanedLine.startsWith("[") && cleanedLine.endsWith("]")) {
-                // Subtopic with square brackets
-                const subtopic = cleanedLine.replace(/^\[(.*?)\]$/, "$1");
-                return (
-                  <h2 key={lineIndex} className="font-bold text-xl text-black-600 mb-2">
-                    {subtopic}
-                  </h2>
-                );
-              } else {
-                // Regular bullet points without hyphens
-                return (
-                  <ul key={lineIndex} className="list-disc pl-5">
-                    <li className="text-lg text-black-600 mb-2">
-                      {cleanedLine} {/* Display points as clean bullet points */}
-                    </li>
-                  </ul>
-                );
-              }
-            })}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-  
-  
-  
-  return (
-    <div className="min-h-screen" style={{ backgroundColor: "#f6f1eb" }}>
-      <header className="p-4 gap-[500px] flex items-center rounded-full">
+    <div className="min-h-screen bg-gradient-preppal text-white">
+      <header className="p-4 flex justify-between items-center">
         <Link href="/">
-          <div className="font-bold text-3xl font-sans text-black pl-3">
+          <div className="font-semibold font-inter text-3xl font-sans text-white">
             PrepPal
           </div>
         </Link>
@@ -151,23 +148,23 @@ const renderCheatsheetAsList = () => {
 
       <div className="flex-1 flex flex-col justify-center items-center">
         <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
-          <div className="font-extrabold text-6xl text-black-400 font-inter mb-6">
+          <div className="font-semibold text-6xl text-white font-inter mb-6">
             Here's your
-            <span className="font-bold text-6xl" style={{ color: "#a7ece3" }}>
+            <span className="font-semibold text-6xl" style={{ color: "rgba(167, 236, 227, 0.6)" }}>
               {" "}
               cheatsheet!
             </span>
           </div>
-          <div className="font text-2xl pb-5 pt-2">
+          <div className="font text-2xl pb-5 pt-2 text-white">
             Your file has been converted to the following cheatsheet:
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-4xl bg-white border border-gray-300 shadow-md rounded-lg p-6 mt-6"
+            className="w-full max-w-4xl bg-black border border-gray-700 shadow-md rounded-lg p-6 mt-6"
           >
             <div className="mb-4">
-              <label className="block text-lg font-medium text-black-600">
+              <label className="block text-lg font-medium text-white">
                 Upload File
               </label>
               <input
@@ -176,23 +173,24 @@ const renderCheatsheetAsList = () => {
                 className="mt-2 p-2 border border-gray-400 rounded"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-lg font-medium text-black-600">
-                Text Prompt (Optional)
-              </label>
-              <input
-                type="text"
-                value={textPrompt}
-                onChange={(e) => setTextPrompt(e.target.value)}
-                className="mt-2 p-2 border border-gray-400 rounded w-full"
-                placeholder="Enter any additional prompt (optional)"
-              />
-            </div>
+            <div className="mb-4 bg-black  rounded-lg">
+  <label className="block text-lg font-medium text-white">
+    Text Prompt (Optional)
+  </label>
+  <input
+    type="text"
+    value={textPrompt}
+    onChange={(e) => setTextPrompt(e.target.value)}
+    className="mt-2 p-2 border border-gray-500 rounded w-full bg-black text-white"
+    placeholder="Enter any additional prompt (optional)"
+  />
+</div>
+
 
             {/* Generate Cheatsheet Button */}
             <button
               type="submit"
-              className="bg-black text-white px-4 py-2 rounded-full"
+              className="bg-white text-black px-4 py-2 rounded-full"
               disabled={loadingCheatsheet}
             >
               {loadingCheatsheet ? "Generating..." : "Generate Cheatsheet"}
@@ -200,7 +198,7 @@ const renderCheatsheetAsList = () => {
             {/* Generate Quiz Button */}
             <button
               type="button"
-              className="bg-black text-white px-4 py-2 rounded-full ml-4"
+              className="bg-white text-black px-4 py-2 rounded-full ml-4"
               onClick={handleGenerateQuiz}
               disabled={loadingQuiz}
             >
@@ -208,8 +206,8 @@ const renderCheatsheetAsList = () => {
             </button>
           </form>
 
-          <div className="w-full max-w-4xl bg-white border border-gray-300 shadow-md rounded-lg p-6 mt-6">
-            <div className="text-lg text-black-600">
+          <div className="w-full max-w-4xl bg-black border border-gray-700 shadow-md rounded-lg p-6 mt-6">
+            <div className="text-lg text-white">
               {cheatsheetContent ? (
                 renderCheatsheetAsList()
               ) : (
@@ -224,7 +222,7 @@ const renderCheatsheetAsList = () => {
 
           <div className="flex gap-4 mt-8">
             <Link href="/">
-              <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
+              <label className="flex items-center justify-center w-58 p-4 bg-white text-black border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
                 <span className="font-bold">Back</span>
               </label>
             </Link>
