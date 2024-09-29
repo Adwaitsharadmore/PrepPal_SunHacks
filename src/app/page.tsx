@@ -87,31 +87,19 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-preppal bg-custom-bg " style={{ backgroundColor: "#000" }}>
       {/* Upper Header Section */}
-      <header className="p-4 flex justify-center">
-        <div className="flex gap-5 pl-10 pr-10 items-center p-2.5 rounded-full text-white shadow-lg custom-shadow">
-          <Link href="/login">
-            <span className="cursor-pointer">Login</span>
-          </Link>
-          <Link href="/contact">
-            <span className="cursor-pointer">Contact</span>
-          </Link>
-          <Link href="/">
-            <span className="cursor-pointer">Home</span>
-          </Link>
-        </div>
-      </header>
+
 
       {/* Main Section */}
       
       <div className="flex-1 flex bg-gradient-preppal flex-col justify-center items-center section">
         <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
-          <div className="font-semibold text-6xl text-white font-inter mb-4 text-center">
-            prepPal
+          <div className="font-semibold text-6xl text-white font-poppins-bold mb-4 text-center">
+            PrepPal
           </div>
 
           <div className="font-semibold text-4xl text-white font-inter mb-2 text-center">
             for last-minute
-            <span className="font-semibold text-4xl" style={{ color: "rgba(167, 236, 227, 0.6)" }}>
+            <span className="font-semibold text-4xl" style={{ color: "rgba(235, 255, 92, 1)" }}>
               {" "}studies
             </span>
           </div>

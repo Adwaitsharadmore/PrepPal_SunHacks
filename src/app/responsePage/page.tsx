@@ -150,7 +150,7 @@ const ResponsePage = () => {
         <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
           <div className="font-semibold text-6xl text-white font-inter mb-6">
             Here's your
-            <span className="font-semibold text-6xl" style={{ color: "rgba(167, 236, 227, 0.6)" }}>
+            <span className="font-semibold text-6xl" style={{ color: "rgba(235, 255, 92, 1)" }}>
               {" "}
               cheatsheet!
             </span>
