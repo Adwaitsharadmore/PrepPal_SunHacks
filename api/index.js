@@ -10,7 +10,6 @@ dotenv.config();
 const app = express();
 app.use(cors());
 
-
 const port = process.env.PORT || 3001;
 
 // Initialize Google Generative AI and File Manager
@@ -37,7 +36,7 @@ async function uploadFileWithRetry(filePath, options, retries = 3) {
   }
 }
 
-// Route for file upload and content generation
+// Route for file upload and cheatsheet generation
 app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
   const { file } = req;
   const { textPrompt } = req.body;
@@ -65,7 +64,7 @@ app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
           fileUri: uploadResponse.file.uri,
         },
       },
-      { text: textPrompt || "Can you create cheatsheet of this document with the main title in curly brackets and subtopics in brackets and their bullet points and keep the text normal" },
+      { text: textPrompt || "Can you create a cheat sheet of this document with the main title in curly brackets and sub topics in brackets and their bulltwt points and keep the text normal." },
     ]);
 
     // Return the generated text as response
@@ -79,6 +78,56 @@ app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
   } catch (error) {
     console.error("Error during file upload or content generation:", error);
     res.status(500).json({ error: "File upload or content generation failed" });
+  }
+});
+
+// Route for file upload and quiz generation
+// Route for file upload and quiz generation
+app.post('/upload-and-generate-quiz', upload.single('file'), async (req, res) => {
+  const { file } = req;
+  const { textPrompt } = req.body;
+
+  if (!file) {
+    return res.status(400).json({ error: "No file uploaded" });
+  }
+
+  try {
+    const filePath = file.path;
+
+    // Upload the file with retries
+    const uploadResponse = await uploadFileWithRetry(filePath, {
+      mimeType: "application/pdf",
+      displayName: file.originalname,
+    });
+
+    console.log(`Uploaded file: ${uploadResponse.file.displayName} as ${uploadResponse.file.uri}`);
+
+    // Generate quiz using the uploaded file and the text prompt
+    const result = await model.generateContent([
+      {
+        fileData: {
+          mimeType: uploadResponse.file.mimeType,
+          fileUri: uploadResponse.file.uri,
+        },
+      },
+      { text: "Can you generate 5 multiple-choice questions based on the document provided with four options out of which one is the correct answer. Write the questions in curly brackets. Write the four options in square brackets. Write the correct option being in parenthesis at the end of the question. Make all the font normal." },
+    ]);
+
+    // Log the generated quiz content
+    const generatedText = result.response.text(); // Assuming the AI returns text data
+    console.log("Generated quiz content:", generatedText);
+
+    // Return the generated quiz as response
+    res.json({
+      message: "Quiz generated successfully",
+      generatedQuiz: generatedText, // Output the generated quiz
+    });
+
+    // Delete the uploaded file from local storage
+    fs.unlinkSync(filePath);
+  } catch (error) {
+    console.error("Error during file upload or quiz generation:", error);
+    res.status(500).json({ error: "File upload or quiz generation failed" });
   }
 });
 
