@@ -69,6 +69,7 @@ app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
     ]);
 
     // Return the generated text as response
+    
     res.json({
       message: "Content generated successfully",
       generatedText: result.response.text(), // Output the generated text

@@ -1,115 +1,129 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect } from "react";
 import Link from "next/link";
 import "./globals.css";
-import cors from "cors";
-import express from "express";
+import Image from "next/image";
 
 export default function Home() {
   const features = [
     {
-      title: "Real-World Insights Over Textbooks",
-      description:
-        "Gain hands-on experience and actionable business skills. Forget textbooks and lectures. PrepPal provides real-world strategies, taught by experts.",
-      imgSrc: "/path-to-image1.jpg", // replace with actual image path
+      title: "notes to cheatsheets",
+      description: "Effortlessly turn your notes into exam-ready cheatsheets. prepPal condenses your material into clear, bite-sized summaries, helping you focus on the key points so you can study smarter and stress less.",
+      image: "/images/feature1.png",  // Corrected path
     },
     {
-      title: "Learn On Your Own Time",
-      description:
-        "Flexible, self-paced education for busy students. Study anytime, anywhere, on any device. PrepPal is designed to fit into your schedule.",
-      imgSrc: "/path-to-image2.jpg", // replace with actual image path
+      title: "ask and ace",
+      description: "No more sifting through pages—get answers to specific questions in an instant!",
+      image: "/images/quiz-yourself.jpg",  // Corrected path
     },
     {
-      title: "Build Your Network",
-      description:
-        "Forge lasting connections to accelerate your career. Connect with peers and educators, both online and in real-world networking events.",
-      imgSrc: "/path-to-image3.jpg", // replace with actual image path
+      title: "quiz yourself",
+      description: "Challenge yourself and reinforce your learning by creating quizzes from your notes.",
+      image: "/images/ask-questions.jpg",  // Corrected path
     },
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("section-visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const sections = document.querySelectorAll(".section");
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-custom-bg">
-      {/* Header */}
-      <header className="p-4 gap-[500px] flex items-center rounded-full">
-        <Link href='/'>
-          <div className="font-bold text-3xl text-black font-inter pl-3">PrepPal</div>
-        </Link>
+    <div className="min-h-screen bg-custom-bg" style={{ backgroundColor: "#f6f1eb" }}>
+      {/* Upper Header Section */}
+      <header className="p-4 flex justify-center">
         <div className="flex gap-5 pl-10 pr-10 items-center bg-black p-2.5 rounded-full text-white shadow-lg custom-shadow">
-          <div>Login</div>
-          <div>Contact</div>
-          <div>Home</div>
+          <Link href="/login">
+            <span className="cursor-pointer">Login</span>
+          </Link>
+          <Link href="/contact">
+            <span className="cursor-pointer">Contact</span>
+          </Link>
+          <Link href="/">
+            <span className="cursor-pointer">Home</span>
+          </Link>
         </div>
       </header>
 
-      {/* File Upload Section */}
+      {/* Main Section */}
       <div className="flex-1 flex flex-col justify-center items-center">
-        <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
-          <div className="font-extrabold text-6xl text-black-400 font-inter">
-            For last minute
-            <span className="font-bold text-6xl" style={{ color: "#a7ece3" }}>
-              {" "}
-              studies
+        <div className="min-h-screen flex-1 flex justify-center items-center flex-col section">
+          <div className="font-bold text-6xl text-black font-inter mb-4 text-center">
+            prepPal
+          </div>
+
+          <div className="font-extrabold text-4xl text-black-400 font-inter mb-2 text-center">
+            for last-minute
+            <span className="font-bold text-4xl" style={{ color: "#a7ece3" }}>
+              {" "}studies
             </span>
           </div>
-          <div className="font text-2xl pb-5 pt-2">
-            Convert notes to cheatsheets
+
+          <div className="font text-xl pb-5 pt-2 text-center">
+            convert notes to cheatsheets
           </div>
+
           <Link href='/responsePage'>
-          <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
-            <input type="file" className="hidden" />
-            <span className="font-bold">Let's make it</span>
-          </label>
+            <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
+              <input type="file" className="hidden" />
+              <span className="font-bold">let's get to studying</span>
+            </label>
           </Link>
         </div>
       </div>
 
-      {/* Vision and Mission Section */}
-      <section className="py-10">
-        <div className="container mx-auto px-6 bg-black rounded-3xl p-12 shadow-lg">
-          <div className="flex gap-8 justify-center mb-12">
-            <div className="w-1/3 p-8 bg-white rounded-3xl shadow-lg">
-              <h2 className="text-4xl font-bold text-black mb-4 text-center">Our Vision</h2>
-              <p className="text-lg text-gray-700 text-center">
-                At PrepPal, we envision a world where students can efficiently prepare for their exams by
-                focusing on key concepts, enabling them to ace their exams with confidence, even under time constraints.
-              </p>
-            </div>
-            <div className="w-1/3 p-8 bg-white rounded-3xl shadow-lg">
-              <h2 className="text-4xl font-bold text-black mb-4 text-center">Our Mission</h2>
-              <p className="text-lg text-gray-700 text-center">
-                Our mission is to create tools that simplify the study process. By providing students with concise,
-                easy-to-digest cheatsheets from their course materials, we help them save time while boosting exam readiness.
-              </p>
-            </div>
-          </div>
+      {/* Mission Section */}
+      <section className="min-h-screen bg-black text-white flex justify-center items-center rounded-t-3xl section">
+        <div className="w-full max-w-6xl p-16 mx-6 my-8">
+          <h1 className="text-5xl md:text-6xl font-extrabold font-inter leading-snug text-center">
+            prepPal is for when you <br /> totally didn't forget to study.
+          </h1>
+
+          <p className="mt-4 text-base md:text-xl font-light max-w-4xl mx-auto text-center">
+            tailored to the urgent needs of students who find themselves in a time-sensitive predicament starting late for exams and needing to cram while still aiming for academic excellence.
+          </p>
         </div>
       </section>
 
-      {/* Features Section with Alternating Layout */}
-      <section className="py-20 bg-custom_background_color">
+      {/* Features Section */}
+      <section className="py-20 bg-black section">
         <div className="container mx-auto px-6">
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`flex flex-col md:flex-row ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              } items-center mb-16`}
+              className={`flex flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row-reverse" : ""} items-center mb-16`}
             >
-              {/* Image Section */}
               <div className="md:w-1/2 p-4">
-                <img
-                  src={feature.imgSrc}
+                <Image
+                  src={feature.image}  // Use feature.image, not features.image
                   alt={feature.title}
-                  className="w-full h-auto rounded-3xl shadow-lg"
+                  width={500}
+                  height={300}
+                  className="object-cover"
                 />
               </div>
 
-              {/* Description Section */}
               <div className="md:w-1/2 p-4">
-                <h3 className="text-4xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-lg text-gray-700">{feature.description}</p>
+                <h3 className="text-4xl font-bold mb-4 text-white">{feature.title}</h3>
+                <p className="text-lg text-gray-300">{feature.description}</p>
               </div>
             </div>
           ))}
