@@ -4,9 +4,10 @@ import Link from "next/link";
 
 const ResponsePage = () => {
   const [cheatsheetContent, setCheatsheetContent] = useState(null);
-  const [file, setFile] = useState(null);
-  const [textPrompt, setTextPrompt] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null); // State to store the uploaded file
+  const [textPrompt, setTextPrompt] = useState(""); // State to store the text prompt
+  const [loadingCheatsheet, setLoadingCheatsheet] = useState(false); // Loading state for cheatsheet
+  const [loadingQuiz, setLoadingQuiz] = useState(false); // Loading state for quiz
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -17,7 +18,7 @@ const ResponsePage = () => {
     }
   };
 
-  // Function to handle form submission
+  // Function to handle cheatsheet generation
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -46,14 +47,45 @@ const ResponsePage = () => {
     }
   };
 
-  // Function to reload the page
-  const handleBackClick = () => {
-    window.location.reload(); // Reload the current page
-  };
+  // Function to handle quiz generation and redirect to quizPage with the quiz content
+  const handleGenerateQuiz = async () => {
+    if (!file) {
+      alert("Please upload a file");
+      return;
+    }
 
-  // Function to format the cheatsheet content into bullet points
-  const renderCheatsheetAsList = () => {
-    if (!cheatsheetContent) return null;
+    setLoadingQuiz(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append(
+      "textPrompt",
+      "Can you generate 5 multiple-choice questions based on the key concepts in the document?"
+    );
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/upload-and-generate-quiz",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+
+      // Redirect to the new quiz page with generated quiz content
+      window.location.href = `/quizPage?quiz=${encodeURIComponent(
+        data.generatedQuiz
+      )}`;
+    } catch (error) {
+      console.error("Error fetching quiz content:", error);
+    } finally {
+      setLoadingQuiz(false);
+    }
+  };
+  
+const renderCheatsheetAsList = () => {
+  if (!cheatsheetContent) return null;
 
   // Split the cheatsheet content by double newlines to separate sections
   const sections = cheatsheetContent.split("\n\n").filter((section) => section.trim() !== "");
@@ -165,7 +197,6 @@ const ResponsePage = () => {
             >
               {loadingCheatsheet ? "Generating..." : "Generate Cheatsheet"}
             </button>
-
             {/* Generate Quiz Button */}
             <button
               type="button"
