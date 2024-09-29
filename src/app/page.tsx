@@ -85,10 +85,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-custom-bg bg-gradient-preppal" style={{ backgroundColor: "#000" }}>
+    <div className="min-h-screen bg-gradient-preppal bg-custom-bg " style={{ backgroundColor: "#000" }}>
       {/* Upper Header Section */}
       <header className="p-4 flex justify-center">
-        <div className="flex gap-5 pl-10 pr-10 items-center bg-black p-2.5 rounded-full text-white shadow-lg custom-shadow">
+        <div className="flex gap-5 pl-10 pr-10 items-center p-2.5 rounded-full text-white shadow-lg custom-shadow">
           <Link href="/login">
             <span className="cursor-pointer">Login</span>
           </Link>
@@ -103,7 +103,7 @@ export default function Home() {
 
       {/* Main Section */}
       
-      <div className="flex-1 flex flex-col justify-center items-center section">
+      <div className="flex-1 flex bg-gradient-preppal flex-col justify-center items-center section">
         <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
           <div className="font-semibold text-6xl text-white font-inter mb-4 text-center">
             prepPal

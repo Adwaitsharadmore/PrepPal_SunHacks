@@ -68,5 +68,5 @@ body {
 }
 /* Add this to globals.css */
 .bg-gradient-preppal {
-  background: radial-gradient(circle, rgba(167, 236, 227, 0.2) 0%, rgba(0, 0, 0, 1) 100%);
+  background: radial-gradient(circle, rgba(161, 84, 255, 0.2) 0%, rgb(0, 0, 0) 100%);
 }

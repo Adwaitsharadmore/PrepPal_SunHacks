@@ -163,16 +163,29 @@ const ResponsePage = () => {
             onSubmit={handleSubmit}
             className="w-full max-w-4xl bg-black border border-gray-700 shadow-md rounded-lg p-6 mt-6"
           >
-            <div className="mb-4">
-              <label className="block text-lg font-medium text-white">
-                Upload File
-              </label>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className="mt-2 p-2 border border-gray-400 rounded"
-              />
-            </div>
+<div className="mb-4">
+  <label className="block text-lg font-medium text-white">
+    Upload File
+  </label>
+  <input
+    type="file"
+    onChange={handleFileChange}
+    className="hidden" // Hide the default file input
+    id="file-upload"
+  />
+  <label
+    htmlFor="file-upload"
+    className="cursor-pointer mt-2 px-4 py-2 bg-white text-black border rounded-full inline-block text-center hover:bg-gray-700 transition-colors"
+  >
+    Choose File
+  </label>
+  {file && (
+    <p className="text-white mt-2">
+      Selected file: <span className="font-semibold">{file.name}</span>
+    </p>
+  )}
+</div>
+
             <div className="mb-4 bg-black  rounded-lg">
   <label className="block text-lg font-medium text-white">
     Text Prompt (Optional)
