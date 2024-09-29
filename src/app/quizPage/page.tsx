@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link"; // Import Link to handle routing back to the homepage
 
 const QuizPage = () => {
   const [quizContent, setQuizContent] = useState([]);
@@ -7,6 +8,7 @@ const QuizPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Store the selected answer
   const [feedback, setFeedback] = useState(null); // Correct/Incorrect feedback
   const [showAnswer, setShowAnswer] = useState(false); // Whether to show the correct answer or not
+  const [isCorrect, setIsCorrect] = useState(false); // Track whether the selected answer is correct
 
   // Simulate fetching quiz content (Replace this with actual API call or content fetching)
   useEffect(() => {
@@ -24,7 +26,7 @@ const QuizPage = () => {
     const questions = quiz.split("{").filter((item) => item.includes("?")); // Split by "{"
     const parsedQuestions = questions.map((q) => {
       const [questionPart, optionsPart] = q.split("}"); // Split by "}"
-      
+
       // Extract options inside the square brackets `[]`
       const optionsMatch = optionsPart.match(/\[([^\]]+)\]/); // Find everything inside square brackets
       const options = optionsMatch ? optionsMatch[1].split("\n").map(opt => opt.trim()) : []; // Split by newline or other delimiters
@@ -53,9 +55,11 @@ const QuizPage = () => {
     if (selectedOptionLetter === correctAnswerLetter) {
       setFeedback("Correct answer!");
       setShowAnswer(false); // No need to show the correct answer if the selected one is correct
+      setIsCorrect(true); // Mark the answer as correct, so the Next button appears
     } else {
-      setFeedback("Wrong answer!");
-      setShowAnswer(true); // Show correct answer if the selected one is wrong
+      setFeedback("Try again!"); // Only show "Try again" on incorrect answer
+      setShowAnswer(false); // Do not show the correct answer
+      setIsCorrect(false); // Keep Next button hidden since the answer is incorrect
     }
   };
 
@@ -64,6 +68,7 @@ const QuizPage = () => {
     setFeedback(null);
     setSelectedAnswer(null);
     setShowAnswer(false);
+    setIsCorrect(false); // Reset the correct answer status for the next question
     setCurrentQuestion((prev) => prev + 1);
   };
 
@@ -73,6 +78,15 @@ const QuizPage = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+      {/* PrepPal Header in the top left */}
+      <header className="absolute top-0 left-0 p-4">
+        <Link href="/">
+          <div className="font-bold text-3xl font-sans text-black pl-3">
+            PrepPal
+          </div>
+        </Link>
+      </header>
+
       <h1 className="text-4xl font-bold mb-6">Here's your quiz!</h1>
 
       {/* Question Slide */}
@@ -108,27 +122,19 @@ const QuizPage = () => {
           }`}
         >
           {feedback}
-          {showAnswer && (
-            <div className="text-green-500 mt-2">
-              Correct answer:{" "}
-              {
-                quizContent[currentQuestion].options.find((opt) =>
-                  opt.startsWith(quizContent[currentQuestion].correctAnswer)
-                )
-              }
-            </div>
-          )}
         </div>
       )}
 
-      {/* Next button */}
-      <button
-        className="mt-6 bg-black text-white px-4 py-2 rounded-full"
-        onClick={handleNextQuestion}
-        disabled={currentQuestion === quizContent.length - 1} // Disable on the last question
-      >
-        {currentQuestion === quizContent.length - 1 ? "Finish Quiz" : "Next"}
-      </button>
+      {/* Next button - Only appear when the correct answer is selected */}
+      {isCorrect && (
+        <button
+          className="mt-6 bg-black text-white px-4 py-2 rounded-full"
+          onClick={handleNextQuestion}
+          disabled={currentQuestion === quizContent.length - 1} // Disable on the last question
+        >
+          {currentQuestion === quizContent.length - 1 ? "Finish Quiz" : "Next"}
+        </button>
+      )}
     </div>
   );
 };
