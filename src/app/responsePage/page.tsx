@@ -4,12 +4,10 @@ import Link from "next/link";
 
 const ResponsePage = () => {
   const [cheatsheetContent, setCheatsheetContent] = useState(null);
-  const [file, setFile] = useState(null); // State to store the uploaded file
-  const [textPrompt, setTextPrompt] = useState(""); // State to store the text prompt
-  const [loadingCheatsheet, setLoadingCheatsheet] = useState(false); // Loading state for cheatsheet
-  const [loadingQuiz, setLoadingQuiz] = useState(false); // Loading state for quiz
+  const [file, setFile] = useState(null);
+  const [textPrompt, setTextPrompt] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Function to handle file upload
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -19,7 +17,7 @@ const ResponsePage = () => {
     }
   };
 
-  // Function to handle cheatsheet generation
+  // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -35,15 +33,12 @@ const ResponsePage = () => {
     formData.append("textPrompt", textPrompt);
 
     try {
-      const response = await fetch(
-        "http://localhost:3001/upload-and-generate",
-        {
-          method: "POST",
-          body: formData, // Send form data with the file and prompt
-        }
-      );
+      const response = await fetch("http://localhost:3001/upload-and-generate", {
+        method: "POST",
+        body: formData,
+      });
       const data = await response.json();
-      setCheatsheetContent(data.generatedText); // Set the cheatsheet content
+      setCheatsheetContent(data.generatedText);
     } catch (error) {
       console.error("Error fetching cheatsheet content:", error);
     } finally {
@@ -51,63 +46,67 @@ const ResponsePage = () => {
     }
   };
 
-  // Function to handle quiz generation and redirect to quizPage with the quiz content
-  const handleGenerateQuiz = async () => {
-    if (!file) {
-      alert("Please upload a file");
-      return;
-    }
-
-    setLoadingQuiz(true);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append(
-      "textPrompt",
-      "Can you generate 5 multiple-choice questions based on the key concepts in the document?"
-    );
-
-    try {
-      const response = await fetch(
-        "http://localhost:3001/upload-and-generate-quiz",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-
-      // Redirect to the new quiz page with generated quiz content
-      window.location.href = `/quizPage?quiz=${encodeURIComponent(
-        data.generatedQuiz
-      )}`;
-    } catch (error) {
-      console.error("Error fetching quiz content:", error);
-    } finally {
-      setLoadingQuiz(false);
-    }
+  // Function to reload the page
+  const handleBackClick = () => {
+    window.location.reload(); // Reload the current page
   };
 
   // Function to format the cheatsheet content into bullet points
   const renderCheatsheetAsList = () => {
     if (!cheatsheetContent) return null;
 
-    // Split the content by new lines and filter out empty lines
-    const points = cheatsheetContent
-      .split("\n")
-      .filter((point) => point.trim() !== "");
+  // Split the cheatsheet content by double newlines to separate sections
+  const sections = cheatsheetContent.split("\n\n").filter((section) => section.trim() !== "");
 
-    return (
-      <ul className="list-disc pl-5">
-        {points.map((point, index) => (
-          <li key={index} className="text-lg text-black-600 mb-2">
-            {point}
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  return (
+    <div>
+      {sections.map((section, index) => {
+        // Split section by newlines to separate the lines
+        const lines = section.split("\n").filter((line) => line.trim() !== "");
+        
+        return (
+          <div key={index} className="mb-6">
+            {lines.map((line, lineIndex) => {
+              // Remove hyphens at the start of lines
+              const cleanedLine = line.replace(/^\-\s*/, "").trim();
 
+              if (cleanedLine.startsWith("{") && cleanedLine.endsWith("}")) {
+                // Main title with curly brackets
+                const mainTitle = cleanedLine.replace(/^\{(.*?)\}$/, "$1");
+                return (
+                  <h1 key={lineIndex} className="font-extrabold text-3xl text-black-600 mb-4">
+                    {mainTitle}
+                  </h1>
+                );
+              } else if (cleanedLine.startsWith("[") && cleanedLine.endsWith("]")) {
+                // Subtopic with square brackets
+                const subtopic = cleanedLine.replace(/^\[(.*?)\]$/, "$1");
+                return (
+                  <h2 key={lineIndex} className="font-bold text-xl text-black-600 mb-2">
+                    {subtopic}
+                  </h2>
+                );
+              } else {
+                // Regular bullet points without hyphens
+                return (
+                  <ul key={lineIndex} className="list-disc pl-5">
+                    <li className="text-lg text-black-600 mb-2">
+                      {cleanedLine} {/* Display points as clean bullet points */}
+                    </li>
+                  </ul>
+                );
+              }
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+  
+  
+  
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#f6f1eb" }}>
       <header className="p-4 gap-[500px] flex items-center rounded-full">
@@ -131,7 +130,6 @@ const ResponsePage = () => {
             Your file has been converted to the following cheatsheet:
           </div>
 
-          {/* File Upload and Text Prompt Form */}
           <form
             onSubmit={handleSubmit}
             className="w-full max-w-4xl bg-white border border-gray-300 shadow-md rounded-lg p-6 mt-6"
@@ -179,11 +177,10 @@ const ResponsePage = () => {
             </button>
           </form>
 
-          {/* Display the cheatsheet content */}
           <div className="w-full max-w-4xl bg-white border border-gray-300 shadow-md rounded-lg p-6 mt-6">
             <div className="text-lg text-black-600">
               {cheatsheetContent ? (
-                renderCheatsheetAsList() // Render the formatted list
+                renderCheatsheetAsList()
               ) : (
                 <p>
                   {loadingCheatsheet
@@ -194,7 +191,6 @@ const ResponsePage = () => {
             </div>
           </div>
 
-          {/* Back Button */}
           <div className="flex gap-4 mt-8">
             <Link href="/">
               <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
