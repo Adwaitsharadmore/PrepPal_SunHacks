@@ -5,22 +5,60 @@ import Link from "next/link";
 import "./globals.css";
 import Image from "next/image";
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 export default function Home() {
   const features = [
     {
       title: "notes to cheatsheets",
       description: "Effortlessly turn your notes into exam-ready cheatsheets. prepPal condenses your material into clear, bite-sized summaries, helping you focus on the key points so you can study smarter and stress less.",
-      image: "/images/feature1.png",  // Corrected path
+      image: "/images/feature1.png",
     },
     {
       title: "ask and ace",
-      description: "No more sifting through pages—get answers to specific questions in an instant!",
-      image: "/images/quiz-yourself.jpg",  // Corrected path
+      description: "No more sifting through pages—get answers to specific questions in an instant! Easily find answers to specific questions from your notes. prepPal lets you pinpoint key information, helping you understand concepts better and enhancing your study sessions.",
+      image: "/images/quiz-yourself.jpg",
     },
     {
       title: "quiz yourself",
-      description: "Challenge yourself and reinforce your learning by creating quizzes from your notes.",
-      image: "/images/ask-questions.jpg",  // Corrected path
+      description: "Challenge yourself and reinforce your learning. With prepPal, create quizzes from your notes and test your understanding. Get instant feedback to help you improve and prepare effectively for exams.",
+      image: "/images/ask-questions.jpg",
+    },
+  ];
+
+  const testimonials = [
+    {
+      text: "I have completed multiple, post-graduate certificates in my life and always felt relief at the end. This time, I felt a sense of loss when I had no new classes to attend.",
+      author: "Ted Burgess",
+      position: "Director of Psychological Health",
+      image: "/images/ted.jpg",
+      rating: 5,
+    },
+    {
+      text: "The Augment Me program helped me realize my passion for education and I now feel confident in my teaching abilities.",
+      author: "Catherine Boldeau",
+      position: "Professional Speaker",
+      image: "/images/catherine.jpg",
+      rating: 4,
+    },
+    {
+      text: "prepPal helped me organize my notes and study effectively. I finally felt ready for my exams without the usual stress.",
+      author: "Jessica Turner",
+      position: "College Student",
+      image: "/images/jessica.jpg",
+      rating: 5,
+    },
+    {
+      text: "I can't believe how easy prepPal made it for me to create a cheat sheet from my notes. It saved me so much time during finals!",
+      author: "Alex Smith",
+      position: "Graduate Student",
+      image: "/images/alex.jpg",
+      rating: 4,
     },
   ];
 
@@ -97,7 +135,7 @@ export default function Home() {
             prepPal is for when you <br /> totally didn't forget to study.
           </h1>
 
-          <p className="mt-4 text-base md:text-xl font-light max-w-4xl mx-auto text-center">
+          <p className="mt-12 pt-8 text-base md:text-xl font-light max-w-4xl mx-auto text-center">
             tailored to the urgent needs of students who find themselves in a time-sensitive predicament starting late for exams and needing to cram while still aiming for academic excellence.
           </p>
         </div>
@@ -113,7 +151,7 @@ export default function Home() {
             >
               <div className="md:w-1/2 p-4">
                 <Image
-                  src={feature.image}  // Use feature.image, not features.image
+                  src={feature.image}
                   alt={feature.title}
                   width={500}
                   height={300}
@@ -127,6 +165,55 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gray-100 text-black section">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-8">What Our Users Say</h2>
+
+          {/* Swiper slider */}
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            loop={true}
+          >
+            {testimonials.map((testimonial, index) => (
+              <SwiperSlide key={index}>
+                <div className="p-6 bg-white rounded-lg shadow-lg max-w-sm mx-auto">
+                  {/* Profile picture */}
+                  <div className="flex justify-center mb-4">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.author}
+                      width={80}
+                      height={80}
+                      className="rounded-full object-cover"
+                    />
+                  </div>
+
+                  {/* Star reviews */}
+                  <div className="flex justify-center mb-4">
+                    {Array.from({ length: testimonial.rating }, (_, i) => (
+                      <span key={i} className="text-yellow-500 text-lg">&#9733;</span>
+                    ))}
+                  </div>
+
+                  {/* Testimonial text */}
+                  <p className="text-lg italic text-center mb-4">
+                    "{testimonial.text}"
+                  </p>
+
+                  <p className="mt-2 font-bold text-center">{testimonial.author}</p>
+                  <p className="text-sm text-gray-600 text-center">{testimonial.position}</p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </section>
     </div>
