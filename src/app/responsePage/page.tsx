@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const ResponsePage = () => {
   const [cheatsheetContent, setCheatsheetContent] = useState(null);
@@ -138,13 +139,19 @@ const ResponsePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-preppal text-white">
-      <header className="p-4 flex justify-between items-center">
-        <Link href="/">
-          <div className="font-semibold font-inter text-3xl font-sans text-white">
-            PrepPal
-          </div>
-        </Link>
-      </header>
+ 
+      <div>
+          <Link href="/">
+            <Image
+              src="/images/logo.JPG" // Make sure the path is correct
+              alt="PrepPal Logo"
+              width={100}
+              height={100}
+              className="object-cover rounded-full"
+            />
+          </Link>
+        </div>
+
 
       <div className="flex-1 flex flex-col justify-center items-center">
         <div className="min-h-screen flex-1 flex justify-center items-center flex-col">

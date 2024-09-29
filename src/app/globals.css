@@ -186,5 +186,9 @@ body {
 }
 /* Add this to globals.css */
 .bg-gradient-preppal {
-  background: radial-gradient(circle, rgba(236, 250, 40, 0.2) 0%, rgb(0, 0, 0) 100%);
+  background: radial-gradient(circle, #d15eff33 0%, rgb(0, 0, 0) 100%);
+}
+
+.text-purple-opacity {
+  color: #d15eff33;
 }

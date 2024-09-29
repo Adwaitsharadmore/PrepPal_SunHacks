@@ -85,43 +85,52 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-preppal bg-custom-bg " style={{ backgroundColor: "#000" }}>
-      {/* Upper Header Section */}
+    <div className="relative min-h-screen bg-custom-bg bg-gradient-preppal" style={{ backgroundColor: "#000" }}>
 
 
       {/* Main Section */}
-      
-      <div className="flex-1 flex bg-gradient-preppal flex-col justify-center items-center section">
-        <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
-          <div className="font-semibold text-6xl text-white font-poppins-bold mb-4 text-center">
-            PrepPal
-          </div>
+{/* Main Section */}
+<div>
 
-          <div className="font-semibold text-4xl text-white font-inter mb-2 text-center">
-            for last-minute
-            <span className="font-semibold text-4xl" style={{ color: "rgba(235, 255, 92, 1)" }}>
-              {" "}studies
-            </span>
-          </div>
+<div className="flex-1 flex bg-gradient-preppal flex-col justify-center items-center section relative z-20">
+  <div className="min-h-screen flex-1 flex justify-center items-center flex-col">
+    {/* Image above "PrepPal" */}
+    <div className="mb-1"> {/* Adjust margin bottom here */}
+      <Image
+        src="/images/file.png" // Replace with the actual path to file.png
+        alt="Decorative Image"
+        width={275} // Adjust size as necessary
+        height={275} // Adjust size as necessary
+        className="object-cover"
+      />
+    </div>
 
-          <div className="font text-xl pb-5 pt-2 text-center">
-            convert notes to cheatsheets
-          </div>
+    <div className="font-semibold text-4xl text-white font-inter mb-1 text-center">
+      for last-minute
+      <span className="font-semibold text-4xl" style={{ color: "rgba(235, 255, 92, 1)" }}>
+        {" "}studies
+      </span>
+    </div>
 
-          <Link href='/responsePage'>
-            <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
-              <input type="file" className="hidden" />
-              <span className="font-semibold">let's get to studying</span>
-            </label>
-          </Link>
-        </div>
-      </div>
+    <div className="font text-xl pb-5 pt-2 text-center">
+      convert notes to cheatsheets
+    </div>
+
+    <Link href='/responsePage'>
+      <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover hover:text-black transition-colors">
+        <input type="file" className="hidden" />
+        <span className="font-semibold">let's get to studying</span>
+      </label>
+    </Link>
+  </div>
+</div>
+</div>
 
       {/* Mission Section */}
-      <section className="min-h-screen bg-black text-white flex justify-center items-center rounded-t-3xl section">
+      <section className="min-h-screen bg-black text-white flex justify-center items-center rounded-t-3xl section relative z-20">
         <div className="w-full max-w-6xl p-16 mx-6 my-8">
           <h1 className="text-5xl md:text-6xl font-semibold leading-snug text-center">
-            prepPal is for when you <br /> totally didn't forget to study.
+            <span style={{ color: "rgba(235, 255, 92, 1)" }}>PrepPal</span> is for when you <br /> totally didn't forget to study.
           </h1>
 
           <p className="mt-12 pt-8 text-base md:text-xl font-light max-w-4xl mx-auto text-center">
@@ -131,7 +140,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-black section">
+      <section className="py-20 bg-black section relative z-20">
         <div className="container mx-auto px-6">
           {features.map((feature, index) => (
             <div
@@ -158,7 +167,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-black text-white section">
+      <section className="py-20 bg-black text-white section relative z-20">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-semibold text-center mb-8">What Our Users Say</h2>
 
