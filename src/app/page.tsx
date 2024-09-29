@@ -36,28 +36,28 @@ export default function Home() {
       text: "prepPal saved my life before finals! turning my messy notes into cheat sheets in seconds? LITERAL. GENIUS.",
       author: "Aariya Gage",
       position: "Junior @ ASU",
-      image: "/images/ted.jpg",
+      image: "/images/lsb_release.png", // Your image path here
       rating: 5,
     },
     {
       text: "can’t believe how I survived without prepPal. it's like having a cheat code for studying!",
       author: "Riya Ubhe",
       position: "Sophomore @ ASU",
-      image: "/images/catherine.jpg",
+      image: "/images/riya.png", // Add image path here
       rating: 4,
     },
     {
       text: "prepPal is the ultimate procrastinator’s dream. i barely studied, and still felt prepared. 10/10!",
       author: "Soohum Kaushik",
       position: "Junior @ ASU",
-      image: "/images/jessica.jpg",
+      image: "/images/soohum.png", // Add image path here
       rating: 5,
     },
     {
       text: "this website makes cramming SO much easier. prepPal turned my chaos into a cheat sheet masterpiece!",
       author: "Adwait More",
       position: "Sophomore @ ASU",
-      image: "/images/alex.jpg",
+      image: "/images/adwait.png", // Add image path here
       rating: 4,
     },
   ];
@@ -182,28 +182,34 @@ export default function Home() {
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index}>
                 <div className="p-6 bg-black rounded-lg shadow-lg max-w-sm mx-auto">
-                  <div className="flex justify-center mb-4">
+                  {/* Reviewer Headshot */}
+                  <div className="flex flex-col items-center mb-4">
                     <Image
-                      src={testimonial.image}
+                      src={testimonial.image || '/images/default-avatar.png'} // Default image if no image is provided
                       alt={testimonial.author}
-                      width={80}
-                      height={80}
-                      className="rounded-full object-cover"
+                      width={200} // Set width
+                      height={200} // Set height to keep it square
+                      className="rounded-lg object-cover" // Make image square with rounded corners
                     />
                   </div>
 
-                  <div className="flex justify-center mb-4">
+                  {/* Reviewer Name and Position */}
+                  <div className="text-center">
+                    <p className="mt-2 font-semibold">{testimonial.author}</p>
+                    <p className="text-sm text-gray-300">{testimonial.position}</p>
+                  </div>
+
+                  {/* Star Rating */}
+                  <div className="flex justify-center mb-4 mt-2">
                     {Array.from({ length: testimonial.rating }, (_, i) => (
                       <span key={i} className="text-yellow-500 text-lg">&#9733;</span>
                     ))}
                   </div>
 
+                  {/* Testimonial Text */}
                   <p className="text-lg italic text-center mb-4">
                     "{testimonial.text}"
                   </p>
-
-                  <p className="mt-2 font-semibold text-center">{testimonial.author}</p>
-                  <p className="text-sm text-gray-300 text-center">{testimonial.position}</p>
                 </div>
               </SwiperSlide>
             ))}
