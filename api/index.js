@@ -64,11 +64,10 @@ app.post('/upload-and-generate', upload.single('file'), async (req, res) => {
           fileUri: uploadResponse.file.uri,
         },
       },
-      { text: textPrompt || "Can you create a cheat sheet of this document with the main title in curly brackets and sub topics in brackets and their bulltwt points and keep the text normal." },
+      { text: textPrompt || "Please create a cheat sheet based on the provided document. Format the main titles using curly brackets {}. Format subtopics using square brackets []. Present each relevant detail as bullet points under the corresponding subtopic. Ensure that all text is in normal font. The format should strictly follow this structure: {Main Title} [Subtopic] - Bullet point 1 - Bullet point 2. Make sure to use this exact format throughout the entire cheat sheet." },
     ]);
 
     // Return the generated text as response
-    
     res.json({
       message: "Content generated successfully",
       generatedText: result.response.text(), // Output the generated text
@@ -88,7 +87,7 @@ app.post('/upload-and-generate-quiz', upload.single('file'), async (req, res) =>
   const { file } = req;
   const { textPrompt } = req.body;
 
-  if (!file) {
+  if (!file) {a
     return res.status(400).json({ error: "No file uploaded" });
   }
 
@@ -96,12 +95,14 @@ app.post('/upload-and-generate-quiz', upload.single('file'), async (req, res) =>
     const filePath = file.path;
 
     // Upload the file with retries
-    const uploadResponse = await uploadFileWithRetry(filePath, {
-      mimeType: "application/pdf",
-      displayName: file.originalname,
-    });
+const uploadResponse = await uploadFileWithRetry(filePath, {
+  mimeType: "application/pdf",
+  displayName: file.originalname,
+});
 
-    console.log(`Uploaded file: ${uploadResponse.file.displayName} as ${uploadResponse.file.uri}`);
+console.log(`Uploaded file: ${uploadResponse.file.displayName} as ${uploadResponse.file.uri}`);
+
+
 
     // Generate quiz using the uploaded file and the text prompt
     const result = await model.generateContent([
@@ -111,7 +112,7 @@ app.post('/upload-and-generate-quiz', upload.single('file'), async (req, res) =>
           fileUri: uploadResponse.file.uri,
         },
       },
-      { text: "Can you generate 5 multiple-choice questions based on the document provided with four options out of which one is the correct answer. Write the questions in curly brackets. Write the four options in square brackets. Write the correct option being in parenthesis at the end of the question. Make all the font normal." },
+      { text: "Generate 5 multiple-choice questions based on the document provided. Each question should be enclosed in curly brackets {}. List the four options within square brackets [], with each option labeled with a), b), c), and d) on a new line using \n to separate them. Place the correct option in parentheses () as a letter (a, b, c, or d) on a new line after the options. Ensure the output strictly follows this format: {Question text} [a) Option A\nb) Option B\nc) Option C\nd) Option D] \n(Correct option letter). Please use this format exactly as described." },
     ]);
 
     // Log the generated quiz content

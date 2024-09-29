@@ -61,6 +61,7 @@ const QuizPage = () => {
     }
   };
 
+
   // Move to the next question
   const handleNextQuestion = () => {
     setFeedback(null);
@@ -121,15 +122,31 @@ const QuizPage = () => {
         </div>
       )}
 
-      {/* Next button - Only appear when the correct answer is selected */}
-      {isCorrect && (
+      {/* Display Next or Well done message based on the current question */}
+      {isCorrect && currentQuestion < quizContent.length - 1 && (
         <button
           className="mt-6 bg-black text-white border border-gray-700 px-4 py-2 rounded-full"
           onClick={handleNextQuestion}
-          disabled={currentQuestion === quizContent.length - 1} // Disable on the last question
         >
-          {currentQuestion === quizContent.length - 1 ? "Finish Quiz" : "Next"}
+          Next
         </button>
+      )}
+
+      {/* Congrats! You have completed the quiz. text and Back button - Only display after the last question */}
+      {isCorrect && currentQuestion === quizContent.length - 1 && (
+        <div className="text-center mt-8">
+          {/* "Congrats! You have completed the quiz." text */}
+          <div className="text-lg font-bold text-green-500 mb-4">
+            Congrats! You have completed the quiz.
+          </div>
+
+          {/* Back button */}
+          <Link href="/responsePage">
+            <label className="flex items-center justify-center w-58 p-4 bg-black text-white border rounded-full cursor-pointer hover:bg-custom-hover transition-colors">
+              <span className="font-bold">Back</span>
+            </label>
+          </Link>
+        </div>
       )}
     </div>
   );
