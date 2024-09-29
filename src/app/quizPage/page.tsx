@@ -29,7 +29,7 @@ const QuizPage = () => {
 
       // Extract options inside the square brackets `[]`
       const optionsMatch = optionsPart.match(/\[([^\]]+)\]/); // Find everything inside square brackets
-      const options = optionsMatch ? optionsMatch[1].split("\n").map(opt => opt.trim()) : []; // Split by newline or other delimiters
+      const options = optionsMatch ? optionsMatch[1].split("\n").map((opt) => opt.trim()) : []; // Split by newline or other delimiters
 
       // Find the correct answer (after the square brackets)
       const correctAnswerMatch = optionsPart.match(/\(([a-d])\)/);
@@ -48,9 +48,7 @@ const QuizPage = () => {
   const handleAnswerSelect = (index) => {
     setSelectedAnswer(index);
     const correctAnswerLetter = quizContent[currentQuestion].correctAnswer; // Get correct answer letter (e.g., "c")
-    const selectedOptionLetter = quizContent[currentQuestion].options[
-      index
-    ].charAt(0); // Get the letter of the selected option (e.g., "a", "b", etc.)
+    const selectedOptionLetter = quizContent[currentQuestion].options[index].charAt(0); // Get the letter of the selected option (e.g., "a", "b", etc.)
 
     if (selectedOptionLetter === correctAnswerLetter) {
       setFeedback("Correct answer!");
@@ -78,21 +76,19 @@ const QuizPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-black bg-gradient-preppal text-white flex flex-col items-center justify-center">
       {/* PrepPal Header in the top left */}
       <header className="absolute top-0 left-0 p-4">
         <Link href="/">
-          <div className="font-bold text-3xl font-sans text-black pl-3">
-            PrepPal
-          </div>
+          <div className="font-semibold text-3xl text-white pl-3">PrepPal</div>
         </Link>
       </header>
 
-      <h1 className="text-4xl font-bold mb-6">Here's your quiz!</h1>
+      <h1 className="text-4xl font-semibold mb-6">Here's your quiz!</h1>
 
       {/* Question Slide */}
-      <div className="bg-gray-100 p-6 rounded-lg shadow-lg w-3/4">
-        <h2 className="text-2xl mb-4">{quizContent[currentQuestion].question}</h2>
+      <div className="bg-black border border-gray-700 p-6 rounded-lg shadow-lg w-3/4">
+        <h2 className="text-2xl font-semibold mb-4">{quizContent[currentQuestion].question}</h2>
 
         {/* Options */}
         <ul>
@@ -102,10 +98,10 @@ const QuizPage = () => {
               className={`border p-4 rounded-lg my-2 cursor-pointer 
               ${
                 selectedAnswer === index && feedback === "Correct answer!"
-                  ? "bg-green-300"
+                  ? "bg-green-500"
                   : selectedAnswer === index
-                  ? "bg-red-300"
-                  : "bg-white"
+                  ? "bg-red-500"
+                  : "bg-gray-800"
               }`} // Turn green if correct, red if wrong
               onClick={() => handleAnswerSelect(index)}
             >
@@ -118,7 +114,7 @@ const QuizPage = () => {
       {/* Feedback */}
       {feedback && (
         <div
-          className={`mt-4 text-lg font-bold ${
+          className={`mt-4 text-lg font-semibold ${
             feedback.includes("Correct") ? "text-green-500" : "text-red-500"
           }`}
         >
@@ -129,7 +125,7 @@ const QuizPage = () => {
       {/* Display Next or Well done message based on the current question */}
       {isCorrect && currentQuestion < quizContent.length - 1 && (
         <button
-          className="mt-6 bg-black text-white px-4 py-2 rounded-full"
+          className="mt-6 bg-black text-white border border-gray-700 px-4 py-2 rounded-full"
           onClick={handleNextQuestion}
         >
           Next
